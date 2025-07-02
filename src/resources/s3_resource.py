@@ -58,7 +58,7 @@ class BucketManager:
                         for bucket in buckets
                     ]
                 )
-                return bucket_list
+                return response if context else bucket_list
             else:
                 return "No buckets found."
         except ClientError as e:
@@ -171,6 +171,6 @@ class BucketManager:
 if __name__ == "__main__":
     s3_bucket = BucketManager()
 
-    logging.info(s3_bucket.list_buckets())
+    logging.info(s3_bucket.list_buckets(context=True))
     # s3_bucket.list_objects('my_bucket')
     # s3_bucket.upload_file('requirements.txt', 'my_bucket')
