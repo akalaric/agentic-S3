@@ -1,0 +1,15 @@
+[project]
+name = "agentic-s3"
+version = "0.1.0"
+description = "Agentic-S3 simplifies AWS S3 management using natural language. Effortlessly interact with your S3 buckets and objects. Streamline your cloud storage operations with the power of AI."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "boto3>=1.39.1",
+    "dotenv>=0.9.9",
+    "gradio>=5.35.0",
+    "langchain>=0.3.26",
+    "langchain-core>=0.3.67",
+    "langchain-google-genai>=2.1.6",
+    "streamlit>=1.46.1",
+]
