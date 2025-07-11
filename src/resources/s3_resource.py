@@ -40,7 +40,9 @@ class BucketManager:
 
     def list_buckets(self, context=False) -> str:
         """
-        Lists all S3 buckets.
+        Lists all S3 buckets available in the AWS account.
+        
+        This method fetches the list of buckets using the AWS S3 client and returns their names and creation dates. If the context parameter is set to True, detailed information is returned.
 
         Args:
             context (bool, optional): If True, returns detailed information. Defaults to False.
@@ -62,13 +64,18 @@ class BucketManager:
             else:
                 return "No buckets found."
         except ClientError as e:
-            return f"Failed to list buckets: {e}"
+            error_code = e.response['Error']['Code']
+            error_message = e.response['Error']['Message']
+            logging.error(f"Failed to list buckets - Code: {error_code}, Message: {error_message}")
+            return f"Failed to list buckets - Code: {error_code}, Message: {error_message}"
 
     def list_objects(
         self, bucket_name: str, max_keys: int = 1000, context=False
     ) -> str:
         """
-        Lists objects within a specific bucket.
+        Lists objects within a specific bucket in AWS S3.
+        
+        This method retrieves the objects stored in the specified bucket, including their keys and sizes. The max_keys parameter limits the number of objects returned, and the context parameter provides detailed information if set to True.
 
         Args:
             bucket_name (str): The name of the bucket to list objects from.
@@ -95,13 +102,18 @@ class BucketManager:
             else:
                 return f"No objects found in bucket {bucket_name}."
         except ClientError as e:
-            return f"Failed to list objects in {bucket_name}: {e}"
+            error_code = e.response['Error']['Code']
+            error_message = e.response['Error']['Message']
+            logging.error(f"Failed to list objects in {bucket_name} - Code: {error_code}, Message: {error_message}")
+            return f"Failed to list objects in {bucket_name} - Code: {error_code}, Message: {error_message}"
 
     def upload_file(
         self, file_name: str, bucket_name: str, object_name: Optional[str] = None
     ) -> str:
         """
-        Uploads a file to a specified S3 bucket.
+        Uploads a file to a specified S3 bucket in AWS.
+        
+        This method uploads a local file to the specified bucket, using the provided object name or defaulting to the file name. It returns a success message or an error message if the upload fails.
 
         Args:
             file_name (str): The local file path of the file to upload.
@@ -117,11 +129,39 @@ class BucketManager:
             self.client.upload_file(file_name, bucket_name, object_name)
             return f"File {file_name} uploaded to bucket {bucket_name} as {object_name}"
         except ClientError as e:
-            return f"Failed to upload file {file_name}: {e}"
+            error_code = e.response['Error']['Code']
+            error_message = e.response['Error']['Message']
+            logging.error(f"Failed to upload file {file_name} - Code: {error_code}, Message: {error_message}")
+            return f"Failed to upload file {file_name} - Code: {error_code}, Message: {error_message}"
 
+    def remove_file(self, file_name: str, bucket_name: str) -> str:
+        """
+        Removes a file from a specified S3 bucket in AWS.
+        
+        This method deletes the specified file from the bucket and returns a success message or an error message if the removal fails.
+
+        Args:
+            file_name (str): The name of the file to remove from S3.
+            bucket_name (str): The name of the bucket to remove from.
+
+        Returns:
+            str: A message indicating success or failure of the remove operation.
+        """
+        try:
+            self.client.delete_object(Bucket=bucket_name, Key=file_name)
+            return f"File {file_name} removed from bucket {bucket_name}"
+        except ClientError as e:
+            error_code = e.response['Error']['Code']
+            error_message = e.response['Error']['Message']
+            logging.error(f"Failed to remove file {file_name} - Code: {error_code}, Message: {error_message}")
+            return f"Failed to remove file {file_name} - Code: {error_code}, Message: {error_message}"
+        
+        
     def download_file(self, file_name: str, bucket_name: str) -> str:
         """
-        Downloads a file from a specified S3 bucket.
+        Downloads a file from a specified S3 bucket in AWS.
+        
+        This method downloads the specified file from the bucket to the local system and returns a success message or an error message if the download fails.
 
         Args:
             file_name (str): The name of the file to download from S3.
@@ -134,11 +174,16 @@ class BucketManager:
             self.client.download_file(bucket_name, file_name, file_name)
             return f"File {file_name} downloaded from bucket {bucket_name}"
         except ClientError as e:
-            return f"Failed to download file {file_name}: {e}"
+            error_code = e.response['Error']['Code']
+            error_message = e.response['Error']['Message']
+            logging.error(f"Failed to download file {file_name} - Code: {error_code}, Message: {error_message}")
+            return f"Failed to download file {file_name} - Code: {error_code}, Message: {error_message}"
 
     def search_objects(self, search_term: str) -> List[str]:
         """
-        Searches for objects across all buckets that match the provided search term.
+        Searches for objects across all buckets in AWS S3 that match the provided search term.
+        
+        This method iterates through all buckets and searches for objects whose keys contain the specified term. It returns a list of matching objects or a message indicating no matches found.
 
         Args:
             search_term (str): The term to search for in object keys across all buckets.
@@ -160,7 +205,10 @@ class BucketManager:
                     if search_term.lower() in obj["Key"].lower():
                         search_results.append(f"Bucket: {name}, Object: {obj['Key']} ")
             except ClientError as e:
-                print(f"Failed to list objects in bucket {name}: {e}")
+                error_code = e.response['Error']['Code']
+                error_message = e.response['Error']['Message']
+                logging.error(f"Failed to list objects in bucket {name} - Code: {error_code}, Message: {error_message}")
+                print(f"Failed to list objects in bucket {name} - Code: {error_code}, Message: {error_message}")
 
         if search_results:
             return "\n".join(search_results)
@@ -171,6 +219,6 @@ class BucketManager:
 if __name__ == "__main__":
     s3_bucket = BucketManager()
 
-    logging.info(s3_bucket.list_buckets(context=True))
-    # s3_bucket.list_objects('my_bucket')
+    logging.info(s3_bucket.list_buckets())
+    # logging.info(s3_bucket.list_objects('my_bucket'))
     # s3_bucket.upload_file('requirements.txt', 'my_bucket')
