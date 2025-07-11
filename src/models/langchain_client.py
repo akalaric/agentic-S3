@@ -8,15 +8,28 @@ from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 load_dotenv()
 
 class GeminiClient():
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            # Create and store the instance
+            cls._instance = super(GeminiClient, cls).__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+
     def __init__(self):
+        if self._initialized:
+            return
         api_key = os.getenv("GEMINI_API_KEY")
         if not api_key:
             raise ValueError("GEMINI_API_KEY environment variable not set")
+
         try:
             self.llm = ChatGoogleGenerativeAI(
                 model="gemini-2.0-flash",
                 google_api_key=api_key
             )
+            self._initialized = True
         except Exception as e:
             raise e
         
