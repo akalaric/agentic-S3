@@ -1,6 +1,8 @@
-# Agentic-S3 — AI-Powered S3 Management
+# Agentic-S3
+**AI-Powered S3 Management**
 
-**Agentic-S3** is an intelligent assistant that simplifies AWS S3 management through natural language. Easily interact with your S3 buckets and objects using AI, making cloud storage operations faster and more intuitive.
+
+**Agentic-S3** is an intelligent assistant built with the LangChain agentic framework, designed to simplify AWS S3 management through natural language. It enables seamless interaction with your S3 buckets and objects, making cloud storage operations faster, smarter, and more intuitive.
 
 ## Features
 
@@ -17,7 +19,7 @@ I can help you manage your AWS S3 storage. Here's what I can do:
 - 🪣 **List Buckets** — View all your AWS S3 buckets  
 - 📁 **Show Objects** — Display objects inside a specific bucket  
 - ⬆️ **Upload Files** — Send files to any bucket  
-- ⬇️ Download Files — Retrieve files from a bucket and store them in the source dictionary
+- ⬇️ **Download Files** — Retrieve files from a bucket and store them in the source dictionary
 - 🔍 **Search Objects** — Find files by name or metadata  
 - 🧠 **Explain Contents** — Get insights into file contents or types  
 - 🏷️ **Retrieve Metadata** — Access metadata of stored objects  
@@ -27,7 +29,7 @@ I can help you manage your AWS S3 storage. Here's what I can do:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/agentic-S3.git
+   git clone https://github.com/akalaric/agentic-S3.git
    ```
 
 2. Navigate to the project directory:
@@ -53,7 +55,7 @@ Ensure [`uv`](https://github.com/astral-sh/uv) is installed.
      cp .env_example .env
      ```
    - Edit `.env` to include your AWS credentials and Gemini API key.
-4. Alternatively, this can be configured in the UI by collapsing the sidebar.
+4. **Alternatively, this can be configured in the UI by collapsing the sidebar.**
 
 ## Usage
 
@@ -65,6 +67,7 @@ Ensure [`uv`](https://github.com/astral-sh/uv) is installed.
 
 #### UI
 - Intuitive interface built with Gradio.
+- Collapse the sidebar for setting up AWS Credentials and Gemini API key
   
 ![UI](configs/gradio_ui.png)
 
