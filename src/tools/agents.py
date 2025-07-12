@@ -155,6 +155,7 @@ async def invoke_llm(query: str):
             6. **Explain objects in the bucket**: Given a list of objects, explain the significance of each object (such as file types or potential usage).
             7. **Get object metadata**: Retrieve metadata (such as size, last-modified date, etc.) for a given object in a bucket.
             8. **Remove a file from a bucket**: Given a file and bucket name, remove the file from the specified S3 bucket.
+            9. **Output data should be shown with new lines for better readability.
             In addition to these tasks, feel free to engage in a normal conversation. You can answer questions, explain concepts, or provide general information. Respond in a friendly, helpful, and informative manner to any query.
             """
         ),
