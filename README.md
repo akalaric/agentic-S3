@@ -53,6 +53,7 @@ Ensure [`uv`](https://github.com/astral-sh/uv) is installed.
      cp .env_example .env
      ```
    - Edit `.env` to include your AWS credentials and Gemini API key.
+4. Alternatively, this can be configured in the UI by collapsing the sidebar.
 
 ## Usage
 
@@ -63,8 +64,7 @@ Ensure [`uv`](https://github.com/astral-sh/uv) is installed.
 2. Open the web interface in your browser and start interacting with your S3 storage using natural language.
 
 #### UI
-- Intuitive interface built with Gradio to interact with both Google AI (Gemini) and the Wolfram Alpha MCP server.
-- Allows users to switch between Wolfram Alpha, Google AI (Gemini), and query history.
+- Intuitive interface built with Gradio.
   
 ![UI](configs/gradio_ui.png)
 
@@ -79,15 +79,8 @@ python main.py
 Feel free to give feedback. The e-mail address is shown if you execute this in a shell:
 
 ```sh
-printf "\x61\x6b\x61\x6c\x61\x72\x69\x63\x40\x6f\x75\x74\x6c\x6f\x6f\x6b\x2e\x63\x6f\x6d\x0a"
+printf "\x61\x6b\x61\x6c\x61\x72\x69\x63\x31\x40\x6f\x75\x74\x6c\x6f\x6f\x6b\x2e\x63\x6f\x6d\x0a"
 ```
-## Dependencies
 
-- Python 3.10+
-- `boto3` – AWS SDK
-- `gradio` – For the web interface
-- `google-generativeai` – Gemini integration
-- `python-dotenv` – Environment variable handling
-- `uv` – Fast dependency installer
 
 
