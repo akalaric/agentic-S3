@@ -1,0 +1,44 @@
+name: AWS_S3_Agents
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+      
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: 📦 Install dependencies
+      run: |
+        set -e
+        python -m pip install --upgrade pip
+        pip install uv
+        uv sync
+
+    - name: Google Generative AI
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      run: |
+        set -e
+        OUTPUT=$(echo -e "Hey\nexit" | python main.py)
+        echo "Model output: $OUTPUT"
+    
+        if [ -z "$OUTPUT" ]; then
+          echo "❌ No output from model"
+          exit 1
+        fi
+    
+        if [ -z "$OUTPUT" ]; then
+          echo "❌ No output from WolframAlpha Client"
+          exit 1
+        fi
