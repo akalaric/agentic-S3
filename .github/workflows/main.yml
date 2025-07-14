@@ -25,20 +25,16 @@ jobs:
         pip install uv
         uv sync
 
-    - name: Google Generative AI
+    - name: 🤖 Run model
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       run: |
         set -e
+        source .venv/bin/activate
         OUTPUT=$(echo -e "Hey\nexit" | python main.py)
         echo "Model output: $OUTPUT"
     
         if [ -z "$OUTPUT" ]; then
           echo "❌ No output from model"
-          exit 1
-        fi
-    
-        if [ -z "$OUTPUT" ]; then
-          echo "❌ No output from WolframAlpha Client"
           exit 1
         fi
