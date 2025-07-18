@@ -76,6 +76,21 @@ Ensure [`uv`](https://github.com/astral-sh/uv) is installed.
 ```bash
 python main.py
 ```
+#### Docker
+
+To build and run the application using Docker, follow these steps:
+
+1. Build the Docker image:
+   ```bash
+   docker build -t agentic-s3 .
+   ```
+
+2. Run the Docker container:
+   ```bash
+   docker run -p 7860:7860 agentic-s3
+   ```
+
+This will start the application and expose it on port 7860, allowing you to access the Gradio web interface through your browser.
 
 ## Contact
 
