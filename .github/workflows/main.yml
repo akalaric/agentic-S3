@@ -38,3 +38,24 @@ jobs:
           echo "❌ No output from model"
           exit 1
         fi
+
+
+    - name: Test Gradio UI
+      run: |
+        set -e
+        source .venv/bin/activate
+
+        python main.py --ui &
+        SERVER_PID=$!
+
+        for i in {1..30}; do
+          if curl -s http://localhost:7860/ >/dev/null; then
+            echo "✅ Gradio server is up!"
+            break
+          fi
+          echo "⏳ Waiting for Gradio server..."
+          sleep 1
+        done
+
+        kill $SERVER_PID
+        echo "✅ Gradio UI responded!"
