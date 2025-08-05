@@ -4,6 +4,7 @@
 
 **Agentic-S3** is an intelligent assistant built with the LangChain agentic framework, designed to simplify AWS S3 management through natural language. It enables seamless interaction with your S3 buckets and objects, making cloud storage operations faster, smarter, and more intuitive.
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/akalaric/agentic-S3)
 ## Features
 
 - **Conversational S3 Management**: Manage buckets and objects using plain English commands.
